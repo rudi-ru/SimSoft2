@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="autoTests" verbose="1">
+    <test name="Tests">
+        <classes>
+            <class name="tests.AddCustomerTest" />
+            <class name="tests.SortByFirstNameTest" />
+            <class name="tests.DeleteCustomerTest" />
+        </classes>
+    </test>
+</suite>
