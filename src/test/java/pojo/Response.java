@@ -5,25 +5,21 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-@Builder
+import java.util.List;
+
+@Data
 public class Response {
-
-
-    @Data
-    class Root {
-        private String id;
-        private Addition addition;
-
-        private int[] important_numbers;
-        private String title;
-        private boolean verified;
-    }
+    private int id;
+    private String title;
+    private boolean verified;
+    private Addition addition;
+    private List<Integer> importantNumbers;
 
     @Data
-    class Addition {
-        private String additional_info;
-        private int additional_number;
+    public static class Addition {
+        private int id;
+        private String additionalInfo;
+        private int additionalNumber;
     }
 }
+

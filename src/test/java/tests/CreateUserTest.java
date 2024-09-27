@@ -25,35 +25,35 @@ public class CreateUserTest extends BaseRequests {
 
     @Test
     public void testCreateUserWithSerialization() {
-        User userPojo = User.builder().build();
+        User userPojo = new User();
 
         userId = given()
                 .spec(requestSpecification)
                 //.body(new File("src/test/resources/json/userCreationBody.json"))
                 .body(userPojo)
                 .when()
-                .post("/api/create")
+                .post("/create")
                 .then()
                 .statusCode(200)
                 //.body("Доп сведения", equalTo(userPojo), "title", equalTo(userPojo))
-                .extract().path("id");
+                .extract().body().asString();//.path("id");//.path("id");
         System.out.println(userId);
     }
     @Test
     public void testCreateUserWithSerializationAndDeserialization() {
-        User userPojo = User.builder().title("123456789").build();
+        User userPojo = new User();
 
         Response response = given()
                 .spec(requestSpecification)
                 //.body(new File("src/test/resources/json/userCreationBody.json"))
                 .body(userPojo)
                 .when()
-                .post("/api/create")
+                .post("/create")
                 .then()
                 .statusCode(200)
                 //.body("Доп сведения", equalTo(userPojo), "title", equalTo(userPojo))
-                .extract().as(Response.class, ObjectMapperType.GSON);
-        //userId = response.;
+                .extract().body().as(Response.class, ObjectMapperType.GSON);
+        userId = String.valueOf(response.getId());
         //System.out.println(userId);
     }
 

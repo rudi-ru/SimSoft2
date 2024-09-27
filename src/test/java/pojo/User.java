@@ -10,28 +10,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-@Getter
-@Setter
-@Builder
+@Data
 public class User {
-
-    @Builder.Default
-    private HashMap<String, String> addition = new HashMap<>();
-
-    @Builder.Default
-    private int[] important_numbers = {42, 87, 15};
-    @Builder.Default
-    private String title = "Заголовок сучности";
-    @Builder.Default
+    private String title = "zagolovok";
     private boolean verified = true;
-}
+    private Addition addition;
+    private List<Integer> importantNumbers = Arrays.asList(1, 2 ,3);
 
-@Builder
-class Addition {
-    @Builder.Default
-    private String additional_info = "Доп сведения";
-    @Builder.Default
-    private int additional_number = 123;
+    @Data
+    public static class Addition {
+        private String additionalInfo = "asdf";
+        private int additionalNumber = 123;
+    }
 }
 
 
