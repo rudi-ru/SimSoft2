@@ -10,7 +10,7 @@ public class Response {
     private String title;
     private boolean verified;
 
-    private List<Integer> important_numbers;
+    private List<Integer> importantNumbers;
     private String error;
 
     @Data

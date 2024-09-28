@@ -1,6 +1,7 @@
 package tests;
 
 import helpers.BaseRequests;
+import helpers.ParametersProvider;
 import io.qameta.allure.Description;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.specification.RequestSpecification;
@@ -28,7 +29,7 @@ public class CreateGetDeleteTest extends BaseRequests {
     // Создаем объект, проверяем код ответа базы, извлекаем id
     @Test
     @Description("1")
-    public void testCreateWithSerialization() {
+    public void testCreateWithSerialization() throws IOException {
         userPojo.setTitle("qwerty123");
         userPojo.setVerified(true);
         userPojo.setImportant_numbers(Arrays.asList(42, 87, 15, 23));
@@ -37,22 +38,22 @@ public class CreateGetDeleteTest extends BaseRequests {
                 .spec(requestSpecification)
                 .body(userPojo)
                 .when()
-                .post("/create")
+                .post(ParametersProvider.getProperty("create"))
                 .then()
                 .statusCode(200).extract().body().asString();
-        Assert.assertFalse(userId.isEmpty());
+        Assert.assertFalse(userId.isEmpty(), "object not created");
     }
 
-    // Проверяем создание объекта
+    // Проверяем создание объекта с указанным id
     @Test
     @Description("2")
-    public void testGetWithSerializationAndDeserialization() {
+    public void testGetWithSerializationAndDeserialization() throws IOException {
 
         Response response = given()
                 .spec(requestSpecification)
                 .body(userPojo)
                 .when()
-                .get("/get/" + userId)
+                .get(ParametersProvider.getProperty("get") + userId)
                 .then()
                 .statusCode(200)
                 .extract()
@@ -61,20 +62,20 @@ public class CreateGetDeleteTest extends BaseRequests {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(userId, response.getId().toString());
         softAssert.assertEquals(userPojo.getTitle(), response.getTitle());
-        softAssert.assertEquals(userPojo.getImportant_numbers(), response.getImportant_numbers());
+        softAssert.assertEquals(userPojo.getImportant_numbers(), response.getImportantNumbers());
         softAssert.assertEquals(userPojo.isVerified(), response.isVerified());
         softAssert.assertAll();
     }
 
-    // Проверяем всю базу
+    // Выбираем из базы все имеющиеся объекты, если база пустая - выводим ошибку
     @Test
     @Description("3")
-    public void testGetAllWithSerializationAndDeserialization() {
+    public void testGetAllWithSerializationAndDeserialization() throws IOException {
         Response response = given()
                 .spec(requestSpecification)
                 .body(userPojo)
                 .when()
-                .get("/getAll")
+                .get(ParametersProvider.getProperty("getAll"))
                 .then()
                 .statusCode(200)
                 .extract()
@@ -83,7 +84,7 @@ public class CreateGetDeleteTest extends BaseRequests {
         Assert.assertFalse(response.toString().isEmpty(), "empty");
     }
 
-    // этот тест не работает - отваливается база
+//     этот тест не работает - отваливается база
 //    @Test
 //    @Description("4")
 //    public void testPatchWithSerializationAndDeserialization() {
@@ -104,16 +105,16 @@ public class CreateGetDeleteTest extends BaseRequests {
 //        Assert.assertFalse(response.toString().isEmpty());
 //    }
 
-    // удаляем объект
+    // Удаляем объект из базы с указанным id
     @Test
     @Description("5")
-    public void testTryDeleteUserWithSerializationAndDeserialization() {
+    public void testTryDeleteUserWithSerializationAndDeserialization() throws IOException {
 
         BaseRequests.deleteUserById(userId);
         Response response = (Response) given()
                 .spec(requestSpecification)
                 .when()
-                .delete("/delete/" + userId)
+                .delete(ParametersProvider.getProperty("delete") + userId)
                 .then()
                 .statusCode(500)
                 .extract()

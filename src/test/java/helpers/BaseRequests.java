@@ -22,11 +22,11 @@ public class BaseRequests {
         return requestSpecBuilder.build(); //
     }
 
-    public static void deleteUserById(String userId) {
+    public static void deleteUserById(String userId) throws IOException {
 
         given()
                 .when()
-                .delete("/api/delete/" + userId)
+                .delete(ParametersProvider.getProperty("delete") + userId)
                 .then()
                 .statusCode(204);
     }
