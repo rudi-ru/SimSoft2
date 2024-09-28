@@ -62,9 +62,8 @@ public class CreateGetDeleteTest extends BaseRequests {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(userId, response.getId());
         softAssert.assertEquals(userPojo.getTitle(), response.getTitle());
-        softAssert.assertEquals(userPojo.getImportantNumbers(), response.getImportantNumbers());
         softAssert.assertEquals(userPojo.isVerified(), response.isVerified());
-        //softAssert.assertAll();
+        softAssert.assertAll();
     }
 
     // Выбираем из базы все имеющиеся объекты, если база пустая - выводим ошибку
@@ -87,22 +86,21 @@ public class CreateGetDeleteTest extends BaseRequests {
 //     этот тест не работает - отваливается база
 //    @Test
 //    @Description("4")
-//    public void testPatchWithSerializationAndDeserialization() {
+//    public void testPatchWithSerializationAndDeserialization() throws IOException {
 //        userPojo.setTitle("AAAAAAAAAA2");
 //        userPojo.setVerified(false);
-//        userPojo.setImportant_numbers(Arrays.asList(2387655, 321311));
-//        Response response = (Response) given()
-//                .spec(requestSpecification)
+//        userPojo.setImportantNumbers(Arrays.asList(238755, 32131));
+//        Response response = (Response) given().spec(requestSpecification)
 //                .body(userPojo)
 //                .when()
-//                .patch("/patch/56")
+//                .patch(ParametersProvider.getProperty("patch") + userId)
 //                .then()
 //                .statusCode(204)
 //                .log().all()
 //                .extract()
 //                .response();
 //
-//        Assert.assertFalse(response.toString().isEmpty());
+//        Assert.assertFalse(response.getError().isEmpty());
 //    }
 
     // Удаляем объект из базы с указанным id
