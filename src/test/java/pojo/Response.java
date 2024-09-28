@@ -1,23 +1,21 @@
 package pojo;
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.List;
 
 @Data
 public class Response {
-    private int id;
+    private String id;
+    private Addition addition;
     private String title;
     private boolean verified;
-    private Addition addition;
-    private List<Integer> importantNumbers;
+
+    private List<Integer> important_numbers;
+    private String error;
 
     @Data
     public static class Addition {
-        private int id;
+        private String id;
         private String additionalInfo;
         private int additionalNumber;
     }

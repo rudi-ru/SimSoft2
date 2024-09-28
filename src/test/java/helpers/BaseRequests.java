@@ -12,14 +12,13 @@ import static io.restassured.RestAssured.given;
 
 public class BaseRequests {
 
-    public static RequestSpecification initRequestSpecification() throws IOException{
+    public static RequestSpecification initRequestSpecification() throws IOException {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
         requestSpecBuilder
                 .setContentType(ContentType.JSON)
                 .setBaseUri(ParametersProvider.getProperty("apiUrl"))
                 .setAccept(ContentType.JSON);
-       // RequestSpecification requestSpecification = requestSpecBuilder.build();
         return requestSpecBuilder.build(); //
     }
 
@@ -30,6 +29,5 @@ public class BaseRequests {
                 .delete("/api/delete/" + userId)
                 .then()
                 .statusCode(204);
-
     }
 }

@@ -15,8 +15,7 @@ public class ParametersProvider {
     private ParametersProvider() throws IOException {
         Properties properties = new Properties();
         properties.load(new FileInputStream("src/test/resources/local_env.properties"));
-            propertiesList.add(properties);
-
+        propertiesList.add(properties);
     }
 
     public static synchronized ParametersProvider getInstance() throws IOException {
@@ -27,9 +26,9 @@ public class ParametersProvider {
     }
 
     public static String getProperty(final String key) throws IOException {
-        for(Properties properties : getInstance().propertiesList) {
+        for (Properties properties : getInstance().propertiesList) {
             String result = properties.getProperty(key, null);
-            if(result != null) {
+            if (result != null) {
                 return result;
             }
         }
