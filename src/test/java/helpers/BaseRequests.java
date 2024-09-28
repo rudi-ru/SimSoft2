@@ -26,7 +26,7 @@ public class BaseRequests {
 
         given()
                 .when()
-                .delete(ParametersProvider.getProperty("delete") + userId)
+                .delete(ParametersProvider.getProperty("delete").toString() + userId)
                 .then()
                 .statusCode(204);
     }
